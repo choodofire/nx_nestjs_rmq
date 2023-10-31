@@ -1,9 +1,9 @@
 import {Injectable} from '@nestjs/common';
 import {UserRepository} from "../user/repositories/user.repository";
-import {RegisterDto} from "./auth.controller";
 import {UserEntity} from "../user/entities/user.entity";
 import {UserRole} from "@nest-rmq/interfaces";
 import {JwtService} from "@nestjs/jwt";
+import {AccountRegister} from "@nest-rmq/contracts";
 
 @Injectable()
 export class AuthService {
@@ -12,7 +12,7 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async register({ email, password, name }: RegisterDto) {
+  async register({ email, password, name }: AccountRegister.Request): Promise<AccountRegister.Response> {
     const oldUser = await this.userRepository.findUser(email);
     if (oldUser) {
       throw new Error('This user has already been registered.');
@@ -44,6 +44,7 @@ export class AuthService {
 
     return { id: userEntity._id };
   }
+
   async login(id: string) {
     return {
       access_token: await this.jwtService.signAsync({ id })

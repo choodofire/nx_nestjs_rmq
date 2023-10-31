@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@nest-rmq/contracts": ["libs/contracts/src/index.ts"],
       "@nest-rmq/interfaces": ["libs/interfaces/src/index.ts"]
     }
   },
