@@ -13,6 +13,7 @@ export class BuyItemSaga {
   private state: BuyItemSagaState;
 
   constructor(public user: UserEntity, public itemId: string, public rmqService: RMQService) {
+    this.setState(user.getItemState(itemId), itemId);
   }
 
   setState(state: PurchaseState, itemId: string) {

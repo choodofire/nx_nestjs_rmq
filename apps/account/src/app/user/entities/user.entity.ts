@@ -21,7 +21,7 @@ export class UserEntity implements IUser {
   }
 
   public setItemStatus(itemId: string, state: PurchaseState) {
-    const exist = this.items.find(c => c._id === itemId);
+    const exist = this.items.find(c => c.itemId === itemId);
     if (!exist) {
       this.items.push({
         itemId,
@@ -36,7 +36,7 @@ export class UserEntity implements IUser {
     }
 
     this.items = this.items.map(c => {
-      if (c._id === itemId) {
+      if (c.itemId === itemId) {
         c.purchaseState = state;
         return c;
       }
@@ -47,6 +47,10 @@ export class UserEntity implements IUser {
       data: { itemId, userId: this._id, state }
     });
     return this;
+  }
+
+  public getItemState(itemId: string): PurchaseState {
+    return this.items.find(c => c.itemId === itemId)?.purchaseState ?? PurchaseState.Init;
   }
 
   public getPublicProfile() {
