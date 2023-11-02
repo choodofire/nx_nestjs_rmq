@@ -30,4 +30,8 @@ export class UserRepository {
   async deleteUser(email: string) {
     await this.userModel.deleteOne({ email }).exec();
   }
+
+  async healthCheck() {
+    return await this.userModel.findOne({}).exec();
+  }
 }
